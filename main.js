@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(compression())
 
 app.use(cache({
   '/index.html': 5000,
@@ -42,16 +43,12 @@ app.use(express.static(__dirname + '/public', {
 //   threshold: 0
 // }));
 
-app.use(compression())
+
 
 
 app.use('/', express.static('./public'));
 
-
 app.get('/', (req, res) => {
-  const animal = 'elephant';
-  // It will repeatedly send the word 'elephant' in a 
-  // 'text/html' format file
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
