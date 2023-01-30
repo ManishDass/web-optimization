@@ -21,11 +21,15 @@ app.use(compression({
   // body size before considering compression, the default is 1 kB
   threshold: 0
 }));
+
+app.use('/', express.static('./public'));
+
+
 app.get('/', (req, res) => {
   const animal = 'elephant';
   // It will repeatedly send the word 'elephant' in a 
   // 'text/html' format file
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.listen(port, function () {
