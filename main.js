@@ -2,7 +2,21 @@
 const compression = require('compression');
 const express = require('express');
 const path = require('path');
+const cache = require('cache-headers');
 const port = process.env.PORT || 3000;
+
+const pathsConfig = {
+  paths: {
+      '/**/generic': {
+          staleRevalidate: 'ONE_HOUR',
+          staleError: 'ONE_HOUR'
+      },
+      '/default/values': {},
+      '/user/route': false,
+      '/**': 60
+  }
+};
+
 
 const app = express();const shouldCompress = (req, res) => {
   if (req.headers['x-no-compression']) {
@@ -12,6 +26,7 @@ const app = express();const shouldCompress = (req, res) => {
   // Resort to standard compression
   return compression.filter(req, res);
 };
+
 // Compress all HTTP responses
 app.use(compression({
   // filter: Decide if the answer should be compressed or not,
@@ -21,6 +36,8 @@ app.use(compression({
   // body size before considering compression, the default is 1 kB
   threshold: 0
 }));
+
+app.use(cache.setupInitialCacheHeaders(pathsConfig));
 
 app.use('/', express.static('./public'));
 
