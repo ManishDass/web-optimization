@@ -2,6 +2,7 @@
 const compression = require('compression');
 const express = require('express');
 const path = require('path');
+const port = process.env.PORT || 3000;
 
 const app = express();const shouldCompress = (req, res) => {
   if (req.headers['x-no-compression']) {
@@ -26,7 +27,8 @@ app.get('/', (req, res) => {
   // 'text/html' format file
   res.sendFile(path.join(__dirname, '/index.html'));
 });
-app.listen(3000, function () {
+
+app.listen(port, function () {
   console.log('Example app listening on port 3000!');
 });
 
