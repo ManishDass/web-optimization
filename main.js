@@ -23,24 +23,26 @@ app.use(express.static(__dirname + '/public', {
     }
 }))
 
-const shouldCompress = (req, res) => {
-  if (req.headers['x-no-compression']) {
-    // Will not compress responses, if this header is present
-    return false;
-  }
-  // Resort to standard compression
-  return compression.filter(req, res);
-};
+// const shouldCompress = (req, res) => {
+//   if (req.headers['x-no-compression']) {
+//     // Will not compress responses, if this header is present
+//     return false;
+//   }
+//   // Resort to standard compression
+//   return compression.filter(req, res);
+// };
 
 // Compress all HTTP responses
-app.use(compression({
-  // filter: Decide if the answer should be compressed or not,
-  // depending on the 'shouldCompress' function above
-  filter: shouldCompress,
-  // threshold: It is the byte threshold for the response 
-  // body size before considering compression, the default is 1 kB
-  threshold: 0
-}));
+// app.use(compression({
+//   // filter: Decide if the answer should be compressed or not,
+//   // depending on the 'shouldCompress' function above
+//   filter: shouldCompress,
+//   // threshold: It is the byte threshold for the response 
+//   // body size before considering compression, the default is 1 kB
+//   threshold: 0
+// }));
+
+app.use(compression())
 
 
 app.use('/', express.static('./public'));
