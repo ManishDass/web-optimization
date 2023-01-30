@@ -2,21 +2,15 @@
 const compression = require('compression');
 const express = require('express');
 const path = require('path');
-const cache = require('cache-headers');
+var cache = require('cache-control');
 const port = process.env.PORT || 3000;
 
-// const pathsConfig = {
-//   "maxAge": 2000,
-//   // paths: {
-//   //     '/**/generic': {
-//   //         staleRevalidate: 'ONE_HOUR',
-//   //         staleError: 'ONE_HOUR'
-//   //     },
-//   //     '/default/values': {},
-//   //     '/user/route': 60,
-//   //     '/**': 60
-//   // }
-// };
+app.use(cache({
+  '/index.html': 1000,
+  '/none/**/*.html': 1000,
+  '/private.html': 'private, max-age=300',
+  '/**': 500 // Default to caching all items for 500,
+}));
 
 
 const app = express();
@@ -40,13 +34,9 @@ app.use(compression({
   threshold: 0
 }));
 
-// app.use(cache.setupInitialCacheHeaders(pathsConfig));
 
 app.use('/', express.static('./public'));
 
-// app.use(function (req, res, next) {
-//   res.set('Cache-control', 'public, max-age=300')
-// })
 
 app.get('/', (req, res) => {
   const animal = 'elephant';
