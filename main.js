@@ -15,6 +15,13 @@ app.use(cache({
   '/**': 500 // Default to caching all items for 500,
 }));
 
+app.use(express.static(__dirname + '/public', {
+  maxAge: 86400000,
+  setHeaders: function(res, path) {
+      res.setHeader("Expires", new Date(Date.now() + 2592000000*30).toUTCString());
+    }
+}))
+
 const shouldCompress = (req, res) => {
   if (req.headers['x-no-compression']) {
     // Will not compress responses, if this header is present
