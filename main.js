@@ -5,15 +5,15 @@ const path = require('path');
 var cache = require('cache-control');
 const port = process.env.PORT || 3000;
 
+const app = express();
+
+
 app.use(cache({
   '/index.html': 1000,
   '/none/**/*.html': 1000,
   '/private.html': 'private, max-age=300',
   '/**': 500 // Default to caching all items for 500,
 }));
-
-
-const app = express();
 
 const shouldCompress = (req, res) => {
   if (req.headers['x-no-compression']) {
