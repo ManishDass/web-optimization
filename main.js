@@ -9,10 +9,10 @@ const app = express();
 
 
 app.use(cache({
-  '/index.html': 1000,
-  '/none/**/*.html': 1000,
+  '/index.html': 5000,
+  '/none/**/*.html': 5000,
   '/private.html': 'private, max-age=300',
-  '/**': 500 // Default to caching all items for 500,
+  '/**': 50000 // Default to caching all items for 500,
 }));
 
 app.use(express.static(__dirname + '/public', {
