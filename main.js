@@ -12,8 +12,9 @@ app.use(cache({
   '/index.html': 5000,
   '/none/**/*.html': 5000,
   '/private.html': 'private, max-age=300',
-  '/**': 50000 // Default to caching all items for 500,
+  '/**': 5000000 // Default to caching all items for 500,
 }));
+
 
 app.use(express.static(__dirname + '/public', {
   maxAge: 86400000,
