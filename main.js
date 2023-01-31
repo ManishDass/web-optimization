@@ -7,23 +7,23 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-// app.use(compression())
+app.use(compression())
 
-// app.use(cache({
-//   '/index.html': 5000,
-//   '/none/**/*.html': 5000,
-//   '/private.html': 'private, max-age=300',
-//   '/**': 5000000 // Default to caching all items for 500,
-// }));
+app.use(cache({
+  '/index.html': 5000,
+  '/none/**/*.html': 5000,
+  '/private.html': 'private, max-age=300',
+  '/**': 5000000 // Default to caching all items for 500,
+}));
 
 
 
-// app.use(express.static(__dirname + '/public', {
-//   maxAge: 86400000,
-//   setHeaders: function(res, path) {
-//       res.setHeader("Expires", new Date(Date.now() + 2592000000*30).toUTCString());
-//     }
-// }))
+app.use(express.static(__dirname + '/public', {
+  maxAge: 86400000,
+  setHeaders: function(res, path) {
+      res.setHeader("Expires", new Date(Date.now() + 2592000000*30).toUTCString());
+    }
+}))
 
 // const shouldCompress = (req, res) => {
 //   if (req.headers['x-no-compression']) {
